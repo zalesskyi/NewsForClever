@@ -74,6 +74,5 @@ public class Article {
     public String toString() {
         return "title : " + mTitle + "\n" +
                 "description: " + mDescription + "\n";
-
     }
 }

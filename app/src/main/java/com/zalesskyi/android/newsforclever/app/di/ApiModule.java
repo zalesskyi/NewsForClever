@@ -49,7 +49,7 @@ public class ApiModule {
     }
 
     @Provides
-    Retrofit provideRestAdapter(Application application, Gson gson, OkHttpClient okHttpClient) {
+    Retrofit provideRestAdapter(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder().client(okHttpClient)
                 .baseUrl("https://newsapi.org/v2/")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

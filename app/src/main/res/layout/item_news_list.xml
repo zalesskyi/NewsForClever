@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_view"
+    android:layout_gravity="center"
+    android:layout_marginStart="7dp"
+    android:layout_marginEnd="7dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:elevation="3dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_light_background">
+
+            <ImageView
+                android:id="@+id/article_image"
+                android:layout_width="0dp"
+                android:layout_height="235dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/article_title"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                android:paddingBottom="7dp"
+                android:paddingTop="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/little_light_text"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                app:layout_constraintTop_toBottomOf="@id/article_image"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="Why Russians are being taught to smile"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/article_source"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                android:textSize="13sp"
+                android:textColor="@color/colorAccent"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                app:layout_constraintTop_toBottomOf="@id/article_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:text="BBC News"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/article_published_at"
+                android:layout_marginStart="7dp"
+                android:textSize="13sp"
+                android:textColor="@color/highly_light_text"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                app:layout_constraintLeft_toRightOf="@id/article_source"
+                app:layout_constraintTop_toTopOf="@id/article_source"
+                tools:text="1h"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/article_description"
+                android:padding="7dp"
+                android:textSize="14sp"
+                android:textColor="@color/light_text"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                app:layout_constraintTop_toBottomOf="@id/article_source"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="Companies are training workers to give a friendlier face to foreign visitors during the World Cup."/>
+
+        </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
