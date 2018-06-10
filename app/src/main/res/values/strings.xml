@@ -5,4 +5,5 @@
     <string name="common_err_msg">Something went wrong…</string>
     <string name="empty_list_text">There are no news</string>
     <string name="main_snack_loading">Loading. Please wait…</string>
+    <string name="err_no_connection">Please check your connection</string>
 </resources>

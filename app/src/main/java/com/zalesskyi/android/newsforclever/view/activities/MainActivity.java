@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity
         implements BaseView.MainView {
 
     private Snackbar mProgressSnack;
+    private FragmentManager mFragmentManager;
 
     @Inject
     MainPresenter mPresenter;
@@ -36,8 +37,16 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private MainListener mListener = callback -> {
-        mPresenter.doGetTopNews(callback);
+    private MainListener mListener = new MainListener() {
+        @Override
+        public void getTopNews(MainCallback callback) {
+            mPresenter.doGetTopNews(callback);
+        }
+
+        @Override
+        public void openDetailArticle(String url) {
+            startActivity(DetailActivity.newIntent(MainActivity.this, url));
+        }
     };
 
     @Override
@@ -53,13 +62,18 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.DKGRAY);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.main_container);
+        mFragmentManager = getSupportFragmentManager();
+        Fragment fragment = mFragmentManager.findFragmentById(R.id.main_container);
 
         if (fragment == null) {
             fragment = MainFragment.newInstance(mListener, null);
-            fragmentManager.beginTransaction()
+            mFragmentManager.beginTransaction()
                     .add(R.id.main_container, fragment)
+                    .commit();
+        } else {
+            fragment = MainFragment.newInstance(mListener, null);
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.main_container, fragment)
                     .commit();
         }
     }

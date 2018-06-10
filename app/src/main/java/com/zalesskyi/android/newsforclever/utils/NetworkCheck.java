@@ -12,6 +12,11 @@ public class NetworkCheck {
         mApplication = application;
     }
 
+    /**
+     * Проверка наличия сети.
+     *
+     * @return есть ли интернет-соединение.
+     */
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager)
                 mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);

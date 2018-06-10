@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.zalesskyi.android.newsforclever.R;
 import com.zalesskyi.android.newsforclever.model.Article;
+import com.zalesskyi.android.newsforclever.view.listeners.ItemListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +17,9 @@ import butterknife.ButterKnife;
 public class NewsHolder extends RecyclerView.ViewHolder {
 
     private Context mContext;
+    private ItemListener<Article> mListener;
+
+    private View mParent;
 
     @BindView(R.id.article_title)
     TextView mArticleTitle;
@@ -32,11 +36,12 @@ public class NewsHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.article_published_at)
     TextView mArticlePublishedAt;
 
-    public NewsHolder(View itemView, Context ctx) {
+    public NewsHolder(View itemView, Context ctx, ItemListener<Article> listener) {
         super(itemView);
+        mParent = itemView;
         ButterKnife.bind(this, itemView);
-
         mContext = ctx;
+        mListener = listener;
     }
 
     public void bindArticle(Article article) {
@@ -49,5 +54,7 @@ public class NewsHolder extends RecyclerView.ViewHolder {
                 .error(R.drawable.ic_shelves)
                 .fit()
                 .into(mArticleImage);
+
+        mParent.setOnClickListener(v -> mListener.open(article));
     }
 }

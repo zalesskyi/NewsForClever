@@ -25,14 +25,14 @@ public class MainFragment extends Fragment implements MainListener.MainCallback 
 
     private static final String SEARCH_QUERY_ARG = "search_query";
 
-    private ItemListener<Article> mItemListener = item -> {
-
-    };
-
     @Nullable
     private String mSearchQuery;
     private MainListener mListener;
     private NewsAdapter mAdapter;
+
+    private ItemListener<Article> mItemListener = item -> {
+        mListener.openDetailArticle(item.getUrl());
+    };
 
     @BindView(R.id.news_recycler_view)
     RecyclerView mRecyclerView;
@@ -63,6 +63,11 @@ public class MainFragment extends Fragment implements MainListener.MainCallback 
             mListener.getTopNews(this);
         }
         return v;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
     }
 
     private void setupUI() {
