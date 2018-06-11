@@ -1,48 +1,60 @@
 package com.zalesskyi.android.newsforclever.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
-public class NewsList {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
-    @SerializedName("status")
-    private String mStatus;
+public class NewsList extends RealmObject {
 
-    @SerializedName("totalResults")
-    private int mResultsCount;
+    @PrimaryKey
+    long realmId;
 
-    @SerializedName("articles")
-    private List<Article> mArticles;
+    @Ignore
+    private String status;
+    @Ignore
+    private int resultsCount;
+    private RealmList<Article> articles;
+
+    public long getRealmId() {
+        return realmId;
+    }
+
+    public void setRealmId(long realmId) {
+        this.realmId = realmId;
+    }
 
     public String getStatus() {
-        return mStatus;
+        return status;
     }
 
     public void setStatus(String status) {
-        mStatus = status;
+        this.status = status;
     }
 
     public int getResultsCount() {
-        return mResultsCount;
+        return resultsCount;
     }
 
     public void setResultsCount(int resultsCount) {
-        mResultsCount = resultsCount;
+        this.resultsCount = resultsCount;
     }
 
     public List<Article> getArticles() {
-        return mArticles;
+        return articles;
     }
 
     public void setArticles(List<Article> articles) {
-        mArticles = articles;
+        this.articles = new RealmList<Article>(
+                articles.toArray(new Article[articles.size()]));
     }
 
     @Override
     public String toString() {
-        return "status: " + mStatus + "\n" +
-                "totalResults: " + mResultsCount + "\n" +
-                "articles : " + mArticles;
+        return "status: " + status + "\n" +
+                "totalResults: " + resultsCount + "\n" +
+                "articles : " + articles;
     }
 }

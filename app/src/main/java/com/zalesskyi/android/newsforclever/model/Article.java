@@ -2,77 +2,78 @@ package com.zalesskyi.android.newsforclever.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Article {
+import io.realm.RealmObject;
 
+public class Article extends RealmObject {
     @SerializedName("source")
-    private Source mSource;
+    private Source source;
 
     @SerializedName("title")
-    private String mTitle;
+    private String title;
 
     @SerializedName("description")
-    private String mDescription;
+    private String description;
 
     @SerializedName("url")
-    private String mUrl;
+    private String url;
 
     @SerializedName("urlToImage")
-    private String mUrlToImage;
+    private String urlToImage;
 
     @SerializedName("publishedAt")
-    private String mPublishedAt;
+    private String publishedAt;
 
     public Source getSource() {
-        return mSource;
+        return source;
     }
 
     public void setSource(Source source) {
-        mSource = source;
+        this.source = source;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public void setTitle(String title) {
-        mTitle = title;
+        this.title = title;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public void setDescription(String description) {
-        mDescription = description;
+        this.description = description;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
 
     public String getUrlToImage() {
-        return mUrlToImage;
+        return urlToImage;
     }
 
     public void setUrlToImage(String urlToImage) {
-        mUrlToImage = urlToImage;
+        this.urlToImage = urlToImage;
     }
 
     public String getPublishedAt() {
-        return mPublishedAt;
+        return publishedAt;
     }
 
     public void setPublishedAt(String publishedAt) {
-        mPublishedAt = publishedAt;
+        this.publishedAt = publishedAt;
     }
 
     @Override
     public String toString() {
-        return "title : " + mTitle + "\n" +
-                "description: " + mDescription + "\n";
+        return "title : " + title + "\n" +
+                "description: " + description + "\n";
     }
 }

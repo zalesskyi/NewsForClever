@@ -82,6 +82,8 @@ public class MainFragment extends Fragment implements MainListener.MainCallback 
         mRecyclerView.setVisibility(View.VISIBLE);
         mEmptyList.setVisibility(View.GONE);
 
+        mAdapter.removeItems();
+
         for (Article article : articles) {
             mAdapter.addItem(article);
         }

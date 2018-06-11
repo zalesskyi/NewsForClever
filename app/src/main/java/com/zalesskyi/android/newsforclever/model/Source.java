@@ -1,17 +1,16 @@
 package com.zalesskyi.android.newsforclever.model;
 
-import com.google.gson.annotations.SerializedName;
+import io.realm.RealmObject;
 
-public class Source {
+public class Source extends RealmObject {
 
-    @SerializedName("name")
-    String mName;
+    String name;
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        mName = name;
+        this.name = name;
     }
 }

@@ -6,4 +6,8 @@
     <string name="empty_list_text">There are no news</string>
     <string name="main_snack_loading">Loading. Please wait…</string>
     <string name="err_no_connection">Please check your connection</string>
+
+    <string name="article_created_hours_ago">%1$dh ago</string>
+    <string name="article_created_minutes_ago">%1$d min ago</string>
+    <string name="article_created_seconds_ago">%1$d sec ago</string>
 </resources>

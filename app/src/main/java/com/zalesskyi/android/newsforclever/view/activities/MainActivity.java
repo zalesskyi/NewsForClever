@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean isProgressShown() {
+        return mProgressSnack != null && mProgressSnack.isShown();
+    }
+
+    @Override
     public void showProgress() {
         mProgressSnack = Snackbar.make(mFragmentContainer, R.string.main_snack_loading, Snackbar.LENGTH_INDEFINITE);
         mProgressSnack.show();
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void hideProgress() {
-        if (mProgressSnack.isShown()) {
+        if (mProgressSnack != null && mProgressSnack.isShown()) {
             mProgressSnack.dismiss();
         }
         mProgressSnack = null;

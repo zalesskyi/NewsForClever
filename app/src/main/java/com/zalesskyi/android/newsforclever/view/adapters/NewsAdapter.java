@@ -48,4 +48,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
         mArticles.add(article);
         notifyDataSetChanged();
     }
+
+    public void removeItems() {
+        mArticles.clear();
+        notifyDataSetChanged();
+    }
 }

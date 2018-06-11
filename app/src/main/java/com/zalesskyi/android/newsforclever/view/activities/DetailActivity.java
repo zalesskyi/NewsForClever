@@ -61,6 +61,11 @@ public class DetailActivity extends AppCompatActivity implements BaseView.Detail
     }
 
     @Override
+    public boolean isProgressShown() {
+        return mProgressBar.isShown();
+    }
+
+    @Override
     public void hideProgress() {
         mProgressBar.setVisibility(View.GONE);
     }

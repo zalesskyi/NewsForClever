@@ -8,6 +8,9 @@ import com.zalesskyi.android.newsforclever.utils.NetworkCheck;
 import com.zalesskyi.android.newsforclever.view.BaseView;
 
 abstract class BasePresenter<V extends BaseView> {
+
+    protected static final long NEWS_LIST_REALM_ID = 1;
+
     protected V mView;
     protected NetworkCheck mNetworkCheck;
     protected Application mApplication;
