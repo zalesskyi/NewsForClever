@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity
         implements BaseView.MainView {
 
     private Snackbar mProgressSnack;
+    private SearchView mSearchView;
     private FragmentManager mFragmentManager;
 
     @Inject
@@ -59,23 +64,50 @@ public class MainActivity extends AppCompatActivity
         NewsApp.get(this).getAppComponent().inject(this);
         mPresenter.init(this);
 
-        setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextColor(Color.DKGRAY);
+        setupUI();
 
         mFragmentManager = getSupportFragmentManager();
         Fragment fragment = mFragmentManager.findFragmentById(R.id.main_container);
 
         if (fragment == null) {
-            fragment = MainFragment.newInstance(mListener, null);
+            fragment = MainFragment.newInstance(mListener);
             mFragmentManager.beginTransaction()
                     .add(R.id.main_container, fragment)
                     .commit();
         } else {
-            fragment = MainFragment.newInstance(mListener, null);
+            fragment = MainFragment.newInstance(mListener);
             mFragmentManager.beginTransaction()
                     .replace(R.id.main_container, fragment)
                     .commit();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        mSearchView = (SearchView) menu.findItem(R.id.menu_item_search).getActionView();
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Fragment fragment = mFragmentManager.findFragmentById(R.id.main_container);
+                if (fragment == null) {
+                    fragment = MainFragment.newInstance(mListener);
+                    mFragmentManager.beginTransaction()
+                            .add(R.id.main_container, fragment)
+                            .commit();
+                }
+                mPresenter.doGetNewsBySearch((MainFragment) fragment, query);
+                mSearchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
     }
 
     @Override
@@ -100,5 +132,10 @@ public class MainActivity extends AppCompatActivity
             mProgressSnack.dismiss();
         }
         mProgressSnack = null;
+    }
+
+    private void setupUI() {
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitleTextColor(Color.DKGRAY);
     }
 }

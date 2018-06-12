@@ -21,4 +21,11 @@ public class InteractorImpl implements InteractorContract {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable<NewsList> toDoGetNewsBySearch(String searchQuery, String apiKey) {
+        return mApi.getNewsBySearch(searchQuery, apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

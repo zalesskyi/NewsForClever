@@ -51,7 +51,7 @@ public class NewsHolder extends RecyclerView.ViewHolder {
         mArticlePublishedAt.setText(article.getPublishedAt());
         Picasso.with(mContext)
                 .load(article.getUrlToImage())
-                .error(R.drawable.ic_shelves)
+                .error(R.drawable.ic_tyrannosaurus)
                 .fit()
                 .into(mArticleImage);
 

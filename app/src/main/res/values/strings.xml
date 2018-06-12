@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">News For Clever</string>
+    <string name="app_name">CleverNews</string>
     <string name="api_key">dbd32da4e1464fc09c6b8a47aa77e96d</string>
 
     <string name="common_err_msg">Something went wrong…</string>
@@ -10,4 +10,6 @@
     <string name="article_created_hours_ago">%1$dh ago</string>
     <string name="article_created_minutes_ago">%1$d min ago</string>
     <string name="article_created_seconds_ago">%1$d sec ago</string>
+
+    <string name="search">Search</string>
 </resources>

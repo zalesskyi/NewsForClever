@@ -23,10 +23,6 @@ import butterknife.ButterKnife;
 
 public class MainFragment extends Fragment implements MainListener.MainCallback {
 
-    private static final String SEARCH_QUERY_ARG = "search_query";
-
-    @Nullable
-    private String mSearchQuery;
     private MainListener mListener;
     private NewsAdapter mAdapter;
 
@@ -40,13 +36,10 @@ public class MainFragment extends Fragment implements MainListener.MainCallback 
     @BindView(R.id.news_empty_list)
     View mEmptyList;
 
-    public static MainFragment newInstance(MainListener listener, @Nullable String searchQuery) {
+    public static MainFragment newInstance(MainListener listener) {
         MainFragment mainFragment = new MainFragment();
         mainFragment.mListener = listener;
 
-        Bundle args = new Bundle();
-        args.putString(SEARCH_QUERY_ARG, searchQuery);
-        mainFragment.setArguments(args);
         return mainFragment;
     }
 
@@ -55,8 +48,6 @@ public class MainFragment extends Fragment implements MainListener.MainCallback 
         View v = inflater.inflate(R.layout.fragment_main, parent, false);
 
         ButterKnife.bind(this, v);
-
-        mSearchQuery = getArguments().getString(SEARCH_QUERY_ARG);
 
         setupUI();
         if (mListener != null) {

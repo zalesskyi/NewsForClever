@@ -34,7 +34,7 @@ public class MainPresenter
     /**
      * Получение новостей.
      * Если нет подключения, то отображается тост.
-     * Во время обращения на сервер за списком свежих новостей проверяется локальная БД.
+     * Во время обращения на сервер за списком свежих новостей, проверяется локальная БД.
      * Если в БД содержится список новостей, который был успешно загружен с сервера в прошлый раз,
      * то он отображается.
      * При получении списка свежих новостей с сервера, список старых новостей заменяется на новый.
@@ -87,6 +87,31 @@ public class MainPresenter
                         mView.hideProgress();
                     }
                 });
+    }
+
+    public void doGetNewsBySearch(MainListener.MainCallback callback, String searchQuery) {
+        if (!mNetworkCheck.isOnline()) {
+            mView.showError(mApplication.getString(R.string.err_no_connection));
+        }
+        mInteractor.toDoGetNewsBySearch(searchQuery, mApplication.getString(R.string.api_key))
+                .doOnRequest(l -> mView.showProgress())
+                .map(news -> {
+                    List<Article> articles = news.getArticles();                       // преобразуем ответ от сервера
+                    for (Article article : articles) {
+                        article.setPublishedAt(getDifferenceBetweenTime(article.getPublishedAt()));
+                    }
+                    return news;
+                }).subscribe(news -> {
+                    if (!news.getStatus().equals("ok")) {
+                        mView.showError(mApplication.getString(R.string.common_err_msg));
+                        return;
+                    }
+                    callback.showNews(news.getArticles());
+        }, err -> {
+                    mView.showError(err.getMessage());
+                    Log.e(TAG, err.getMessage());
+                    mView.hideProgress();
+                }, () -> mView.hideProgress());
     }
 
     /**
