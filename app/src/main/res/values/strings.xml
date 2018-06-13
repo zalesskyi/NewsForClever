@@ -12,4 +12,7 @@
     <string name="article_created_seconds_ago">%1$d sec ago</string>
 
     <string name="search">Search</string>
+
+    <string name="back_online">Back online</string>
+    <string name="refresh">Refresh</string>
 </resources>

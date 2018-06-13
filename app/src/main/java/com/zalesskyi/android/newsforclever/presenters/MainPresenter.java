@@ -68,25 +68,25 @@ public class MainPresenter
                     }
                     return news;
                 }).subscribe(news -> {
-                    if (!news.getStatus().equals("ok")) {
-                        mView.showError(mApplication.getString(R.string.common_err_msg));
-                        callback.showEmptyList();
-                        return;
-                    }
-                    news.setRealmId(NEWS_LIST_REALM_ID);
-                    mRealmService.addObject(news, NewsList.class).subscribe(newsList -> {
-                        Log.i(TAG, "List of news was added into Realm : " + newsList);
-                    });
-                    callback.showNews(news.getArticles());
-                }, err -> {
-                    Log.e(TAG, err.getMessage());
-                    mView.showError(err.getMessage());
-                    mView.hideProgress();
-                }, () ->  {
-                    if (mView.isProgressShown()) {
-                        mView.hideProgress();
-                    }
-                });
+            if (!news.getStatus().equals("ok")) {
+                mView.showError(mApplication.getString(R.string.common_err_msg));
+                callback.showEmptyList();
+                return;
+            }
+            news.setRealmId(NEWS_LIST_REALM_ID);
+            mRealmService.addObject(news, NewsList.class).subscribe(newsList -> {
+                Log.i(TAG, "List of news was added into Realm : " + newsList);
+            });
+            callback.showNews(news.getArticles());
+        }, err -> {
+            Log.e(TAG, err.getMessage());
+            mView.showError(err.getMessage());
+            mView.hideProgress();
+        }, () ->  {
+            if (mView.isProgressShown()) {
+                mView.hideProgress();
+            }
+        });
     }
 
     public void doGetNewsBySearch(MainListener.MainCallback callback, String searchQuery) {
@@ -102,16 +102,16 @@ public class MainPresenter
                     }
                     return news;
                 }).subscribe(news -> {
-                    if (!news.getStatus().equals("ok")) {
-                        mView.showError(mApplication.getString(R.string.common_err_msg));
-                        return;
-                    }
-                    callback.showNews(news.getArticles());
+            if (!news.getStatus().equals("ok")) {
+                mView.showError(mApplication.getString(R.string.common_err_msg));
+                return;
+            }
+            callback.showNews(news.getArticles());
         }, err -> {
-                    mView.showError(err.getMessage());
-                    Log.e(TAG, err.getMessage());
-                    mView.hideProgress();
-                }, () -> mView.hideProgress());
+            mView.showError(err.getMessage());
+            Log.e(TAG, err.getMessage());
+            mView.hideProgress();
+        }, () -> mView.hideProgress());
     }
 
     /**

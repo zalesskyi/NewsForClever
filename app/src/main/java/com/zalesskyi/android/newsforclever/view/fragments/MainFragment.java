@@ -2,6 +2,7 @@ package com.zalesskyi.android.newsforclever.view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,6 +30,9 @@ public class MainFragment extends Fragment implements MainListener.MainCallback 
     private ItemListener<Article> mItemListener = item -> {
         mListener.openDetailArticle(item.getUrl());
     };
+
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout mRefreshLayout;
 
     @BindView(R.id.news_recycler_view)
     RecyclerView mRecyclerView;
@@ -66,10 +70,19 @@ public class MainFragment extends Fragment implements MainListener.MainCallback 
 
         mAdapter = new NewsAdapter(getActivity(), mItemListener);
         mRecyclerView.setAdapter(mAdapter);
+
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mRefreshLayout.setOnRefreshListener(() -> {
+           mRefreshLayout.setRefreshing(true);
+
+           mListener.getTopNews(this);
+        });
     }
 
     @Override
     public void showNews(List<Article> articles) {
+        mRefreshLayout.setRefreshing(false);
+
         mRecyclerView.setVisibility(View.VISIBLE);
         mEmptyList.setVisibility(View.GONE);
 
@@ -82,6 +95,8 @@ public class MainFragment extends Fragment implements MainListener.MainCallback 
 
     @Override
     public void showEmptyList() {
+        mRefreshLayout.setRefreshing(false);
+
         mRecyclerView.setVisibility(View.GONE);
         mEmptyList.setVisibility(View.VISIBLE);
     }

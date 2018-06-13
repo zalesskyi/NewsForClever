@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity
     private MainListener mListener = new MainListener() {
         @Override
         public void getTopNews(MainCallback callback) {
+            if (mSearchView != null) {
+                mSearchView.setQuery("", false);
+            }
+
             mPresenter.doGetTopNews(callback);
         }
 
