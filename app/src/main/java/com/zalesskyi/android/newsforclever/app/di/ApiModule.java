@@ -10,7 +10,15 @@ import com.zalesskyi.android.newsforclever.NewsApi;
 import com.zalesskyi.android.newsforclever.interactors.InteractorContract;
 import com.zalesskyi.android.newsforclever.interactors.InteractorImpl;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import dagger.Module;
 import dagger.Provides;
@@ -33,11 +41,42 @@ public class ApiModule {
             builder.addInterceptor(logging);
         }
 
-        builder.connectTimeout(60 * 1000, TimeUnit.MILLISECONDS)
-                .readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+        try {
+            final TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(
+                        java.security.cert.X509Certificate[] chain,
+                        String authType) throws CertificateException {
+                }
 
-        return builder.build();
+                @Override
+                public void checkServerTrusted(
+                        java.security.cert.X509Certificate[] chain,
+                        String authType) throws CertificateException {
+                }
+
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return new java.security.cert.X509Certificate[0];
+                }
+            } };
+
+            final SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts,
+                    new java.security.SecureRandom());
+            final SSLSocketFactory sslSocketFactory = sslContext
+                    .getSocketFactory();
+
+            builder.connectTimeout(60 * 1000, TimeUnit.MILLISECONDS)
+                    .sslSocketFactory(sslSocketFactory)
+                    .readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+
+            return builder.build();
+        } catch (KeyManagementException | NoSuchAlgorithmException exc) {
+            throw new RuntimeException(exc);
+        }
     }
+
 
     @Provides
     Gson provideGson() {

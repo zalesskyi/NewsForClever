@@ -115,6 +115,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.dismiss();
+    }
+
+    @Override
     public void showError(String err) {
         Toast.makeText(this, err, Toast.LENGTH_SHORT).show();
     }
